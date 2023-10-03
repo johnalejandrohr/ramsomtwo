@@ -1,0 +1,65 @@
+# README del Proyecto RansomTwo
+
+**Proyecto RansomTwo**
+
+RansomTwo es una base de código de ransomware creada con fines educativos. Se trata de una herramienta de aprendizaje diseñada para comprender los mecanismos de los ataques de ransomware. Ten en cuenta que ciertas funcionalidades perjudiciales han sido omitidas intencionalmente para garantizar un uso responsable en entornos educativos.
+
+Este README proporciona instrucciones detalladas sobre cómo clonar el proyecto RansomTwo, crear un entorno virtual y configurar las dependencias necesarias para ejecutar el proyecto correctamente.
+
+## Clonar el Proyecto
+
+Primero, clona el proyecto desde el repositorio de GitHub utilizando el siguiente comando:
+
+```bash
+git clone https://github.com/usuario/ramsomtwo.git
+```
+
+Luego, navega al directorio del proyecto:
+
+```bash
+cd ramsomtwo
+```
+
+## Crear un Entorno Virtual
+
+A continuación, crea un entorno virtual para el proyecto utilizando `python-venv`:
+
+```bash
+python -m venv ramsomtwo-env
+```
+
+## Activar el Entorno Virtual (Linux)
+
+Para activar el entorno virtual en Linux, utiliza el siguiente comando:
+
+```bash
+source ramsomtwo-env/bin/activate
+```
+
+## Activar el Entorno Virtual (Windows)
+
+En Windows, ejecuta el siguiente comando para activar el entorno virtual:
+
+```bash
+ramsomtwo-env\Scripts\activate.bat
+```
+
+## Instalar Dependencias
+
+Una vez que el entorno virtual está activado, instala las dependencias necesarias utilizando `pip` y el archivo `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
+
+**Nota:** Si estás descargando e instalando el proyecto por primera vez, el comando anterior instalará las dependencias necesarias. Si ya has instalado nuevas dependencias y deseas actualizar el archivo `requirements.txt`, ejecuta el siguiente comando:
+
+```bash
+pip freeze > requirements.txt
+```
+
+¡Ahora estás listo para trabajar en el proyecto RansomTwo! Si tienes alguna pregunta o problema, no dudes en ponerte en contacto con nosotros.
+
+--- 
+
+*Este README fue mejorado con amor por la comunidad de RansomTwo. ¡Gracias por tu contribución!*
